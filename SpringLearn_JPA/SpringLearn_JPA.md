@@ -3,6 +3,8 @@ DCB ====> https://www.youtube.com/watch?v=XszpXoII9Sg&t=491s
  
 JPA DOC: https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
          https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details 
+		 
+		 https://github.com/shabbirdwd53/Spring-Data-JPA-Tutorial
 
 1) map calss to table
 2) mappint 

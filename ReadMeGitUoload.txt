@@ -16,4 +16,8 @@ git push -u origin main
 ====> add .gitignore file
 cd D:\1_JAVA_SPRINGBOOT_K
 git init
-git add ReadMeGitUoload.txt SpringLearn_JPA/
+git add ReadMeGitUoload.txt .gitignore SpringLearn_JPA/
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/kreshan882/SpringBoot_2023_All.git
+git push -u origin main
