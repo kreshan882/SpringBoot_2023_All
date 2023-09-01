@@ -20,7 +20,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = "course")    // help to print without course
+@ToString(exclude = "course")    // help to print without course colume
 public class CourseMaterial {
 	 
 	@Id
@@ -32,7 +32,8 @@ public class CourseMaterial {
     
     @OneToOne(
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.LAZY,   // when get record only courseMeterial can get 
+            //fetch = FetchType.EAGER,   // get coursemeterila & Course
             optional = false
     )
     @JoinColumn(

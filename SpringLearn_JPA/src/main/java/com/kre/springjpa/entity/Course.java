@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,12 +19,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString(exclude = "students") // M:M have issue can remove
 public class Course {
 
 	  @Id
@@ -42,7 +45,9 @@ public class Course {
 	  private Teacher teacher;
 	  
 	  //M:M handel with new common table [studen_course_map]
-	  @ManyToMany( cascade = CascadeType.ALL)
+	  @ManyToMany( cascade = CascadeType.ALL,
+			  fetch = FetchType.LAZY // fix issue
+			  )
 	  @JoinTable(
 			name = "studen_course_map",
             joinColumns = @JoinColumn(

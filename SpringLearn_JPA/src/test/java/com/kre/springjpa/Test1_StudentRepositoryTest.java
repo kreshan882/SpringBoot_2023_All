@@ -39,7 +39,7 @@ public class Test1_StudentRepositoryTest {
 	@Test
 	void getStudentList() {
 		List<Student> studentList=studentRepository.findAll();
-		System.out.println("studentList:"+studentList);
+		System.out.println("studentList----->"+studentList);
 	}
 	
 	@Test
@@ -53,7 +53,7 @@ public class Test1_StudentRepositoryTest {
 		Student student =Student.builder()
 				.firstName("aaaaaa")
 				.lastName("kreshan")
-				.emailId("kkk6@gmail.com")
+				.emailId("kkk10@gmail.com")
 				.guardian(guardian)
 				.build();
 		
@@ -68,7 +68,7 @@ public class Test1_StudentRepositoryTest {
 	@Test
 	void printStudent_byFirstName_CustomeQuery() {
 		List<Student> studentList_fn=studentRepository.findByFirstName("aaaaaa");
-		System.out.println("studentList_fn:"+studentList_fn);
+		System.out.println("studentList_fn----->"+studentList_fn);
 		/*
 		Hibernate: select s1_0.student_id,s1_0.email_address,s1_0.first_name,s1_0.guardian_email,s1_0.guardian_mobile,s1_0.guardian_name,s1_0.last_name 
 				   from tbl_student s1_0 where s1_0.first_name=?  
@@ -81,35 +81,35 @@ public class Test1_StudentRepositoryTest {
 	@Test
 	void printStudent_byGardian_name() {
 		List<Student> studentList_guardName=studentRepository.findByGuardianName("rajs");
-		System.out.println("studentList_guardName:"+studentList_guardName);
+		System.out.println("studentList_guardName----->"+studentList_guardName);
 	
 	}
 	
 	@Test  //API with customize
 	void print_getStudendByEmailAddress_JPA() {  
 		Student student_EmailAddress_JPA=studentRepository.findByEmailId("kkk6@gmail.com");
-		System.out.println("student_EmailAddress_JPA:"+student_EmailAddress_JPA);
+		System.out.println("student_EmailAddress_JPA----->"+student_EmailAddress_JPA);
 	
 	}
 	
 	@Test //JPQL(java persistence Query Language)
 	void print_getStudendByEmailAddress_QUERY() {  
 		Student student_EmailAddress_QUERY=studentRepository.getStudendByEmailAddress_QUERY("kkk6@gmail.com");
-		System.out.println("student_EmailAddress_QUERY:"+student_EmailAddress_QUERY);
+		System.out.println("student_EmailAddress_QUERY----->"+student_EmailAddress_QUERY);
 	
 	}
 	
 	@Test  //Native Query (good for complex query)
 	void getStudendByEmailAddress_NATIVE() {  
 		Student student_EmailAddress_NATIVE=studentRepository.getStudendByEmailAddress_NATIVE("kkk6@gmail.com");
-		System.out.println("student_EmailAddress_NATIVE:"+student_EmailAddress_NATIVE);
+		System.out.println("student_EmailAddress_NATIVE----->"+student_EmailAddress_NATIVE);
 	
 	}
 	
 	@Test  //Native Query |with pass parameters
 	void getStudendByEmailAddress_NATIVE_PassParams_k() {  
 		Student student_EmailAddress_NATIVE_param2=studentRepository.getStudendByEmailAddress_NATIVE_PassParams_k("kkk6@gmail.com","aaaaaa");
-		System.out.println("student_EmailAddress_NATIVE_param2:"+student_EmailAddress_NATIVE_param2);
+		System.out.println("student_EmailAddress_NATIVE_param2----->"+student_EmailAddress_NATIVE_param2);
 	
 	}
 	
@@ -117,7 +117,7 @@ public class Test1_StudentRepositoryTest {
 	@Test  //Update with Native Query (@Transactional | @Modifiing )
 	void updateStudentNameByEmailId_NATIVE_k() {  
 		int updateStatus=studentRepository.updateStudentNameByEmailId_NATIVE("aaaaaa2","kkk6@gmail.com");
-		System.out.println("updateStatus:"+updateStatus);
+		System.out.println("updateStatus----->"+updateStatus);
 	
 	}
 }

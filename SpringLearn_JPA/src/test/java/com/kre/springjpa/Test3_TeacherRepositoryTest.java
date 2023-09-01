@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class TeacherRepositoryTest {
+class Test3_TeacherRepositoryTest {
 
     @Autowired
     private TeacherRepository teacherRepository;
@@ -33,9 +33,9 @@ class TeacherRepositoryTest {
 
         Teacher teacher =
                 Teacher.builder()
-                        .firstName("Qutub")
-                        .lastName("Khan")
-                        //.courses(List.of(courseDBA,courseJava))
+                        .firstName("sarap")
+                        .lastName("Sir")
+                        //.courses(List.of(courseDBA,courseJava))  //@OneToMany handel in teacher Entity
                         .build();
 
         teacherRepository.save(teacher);

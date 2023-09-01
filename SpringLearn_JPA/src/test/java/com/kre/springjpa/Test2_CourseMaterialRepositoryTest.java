@@ -15,7 +15,7 @@ import com.kre.springjpa.repositery.CourseMaterialRepository;
 public class Test2_CourseMaterialRepositoryTest {
 	
 	  	@Autowired
-	    private CourseMaterialRepository repository;
+	    private CourseMaterialRepository courMeterialRepository;
 
 	    @Test
 	    public void SaveCourseMaterial() {
@@ -31,15 +31,18 @@ public class Test2_CourseMaterialRepositoryTest {
 	                .course(course)
 	                .build();
 
-	        repository.save(courseMaterial);
+	        courMeterialRepository.save(courseMaterial);
 	    }
 	    
 	    @Test
 	    public void printAllCourseMaterials() {
-	        List<CourseMaterial> courseMaterials = 
-	                repository.findAll();
+	        List<CourseMaterial> courseMaterials = courMeterialRepository.findAll();
 
-	        System.out.println("courseMaterials = " + courseMaterials);
+	        System.out.println("courseMaterials1----->" + courseMaterials.get(0));
+	        
+	        //EAGER Loading (load child table data also
+	        Course course=courseMaterials.get(0).getCourse();
+	        System.out.println("courseMaterials2----->" + course.getTitle()+":"+course.getCredit()+":"+course.getTeacher());
 	    }
 	
 }
