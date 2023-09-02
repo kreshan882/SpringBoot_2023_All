@@ -1,0 +1,284 @@
+https://www.youtube.com/watch?v=5lJaUN0bIy0   --> DCB  | try with Java 11| 
+
+OpenShift, Kubernetes, Dockers, Mesos, AWS ???????/
+
+1.31 hour
+
+0.00
+
+	1) INSTALL DOCKER  ----> https://hub.docker.com/
+		1.1) Download the DOCKER 
+			https://www.docker.com/ --> Download for windows --> 500 mb
+			USE WSL2 instance of Hyper-V
+			UN:KRESHAN88 /kreshan882@gmail.com/
+			PW:Pw#1
+	
+		1.2) Update WSL2 
+			https://aka.ms/wsl2kernel    [WSL2 instance install]
+			------ https://docs.microsoft.com/windows/wsl/wsl2-kernal
+			Step 4 - Download the Linux kernel update package --> Download the latest package:--> https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi -->install
+		
+		1.3) Start Desktopn Doccor app ---> Started success
+		
+		1.4) DOCKER COMMANDS
+				1.4.1) docker --version           ---->  V24.0.5, build ced0996)
+					   docker-compose --version   ---->  v2.20.2-desktop.1
+					   
+				1.4.2) start Local DOCKER *******
+						docker run -d -p 80:80 docker/getting-started
+						http://localhost:80  -----------------------------------> docker web
+						
+						docker run hello-world   -----> image pulledd success
+						
+				1.4.3) HELP COMMANDS (total commends)
+						docker --help
+						docker images --help
+						docker container --help
+				
+				1.4.4) docker sequence commends [ Download Image, Run, Check Container Process(runing time container loaded) ]
+						1.4.4.1) pull alpine( light wight linux)
+								docker pull alpine   ( alpine:latest | alpine:3.12 )
+								docker pull hello-world 
+								docker pull dailycodebuffer/dockerpublish:0.0.3
+							
+						1.4.4.2) docker images -a  (-a ==> all the hiden images) 
+						
+						1.4.4.3) docker run hello-world
+								 docker run -p 9091:9091 hello-world    ( -p host_port: contailer_port)
+								 docker run -p 9222:9091 d45040fec2f8   ( -p host_port: contailer_port IMAGE_ID)
+								 
+						1.4.4.4) show in WEB ---> successfuly loadded in (host_port)
+								http://localhost:9222
+						
+						1.4.4.5) DETAILS 
+								1.4.4.5.1) Container Running Process
+									docker ps
+									docker ps -a (hidden process)
+								
+								1.4.4.5.2) Inspect (full details)
+									docker inspect d45040fec2f8   ====> image /container (full details)
+									
+								1.4.4.5.3) Log Files
+									docker logs bea3f168b2bf  (containrt_id)
+									
+								1.4.4.5.4) Container START/STOP/KILL [ http://localhost:9222/ ]
+									docker stop bea3f168b2bf
+									docker kill bea3f168b2bf
+									docker start bea3f168b2bf
+									
+								1.4.4.5.5) EXEC commends (can start the app.jar inside the container_id) - container need to start first
+									docker exec -it bea3f168b2bf bash ( execute+intractive_mode + bash)
+									#ls     	          ---> bash loaded linux file system 
+									#java -jar /app.jar   ---> can run hear
+									#java --version       ---> openjdk 11.0.7 2020-04-14
+									#exit
+									
+						1.4.4.6) DOCKER COMMIT & CREATE new remositery_image
+									Alpine linux , we install something to alpinr image and use it
+									docker images
+									docker run -it alpine
+										#tree .   -----> install tree software inside alpinw
+										#apk add tree
+										#tree .
+										#exit
+										
+									docker ps -a 
+									docker commit 0bafeea103da dailycodebuffer_rep/alpinetreeimage_k    (container_id  repositert/image_name(tag):3.0.0 (version) )
+									docker images
+									docker run -it dailycodebuffer_rep/alpinetreeimage_k
+										#tree .   ----> now avaliable modified alpine
+										#exit
+									
+						1.4.4.7) EXPORT the Container (to the "alpinetreeimage_k_out.tar" file)
+									docker ps -a 
+									cd C:\Users\KRESHAN88\
+									docker export --output alpinetreeimage_k_out.tar 51f132f405e5    (container_id)	
+										C:\Users\KRESHAN88\alpinetreeimage_k_out.tar  ---> file avaliable hear
+									
+									
+						1.4.4.8) IMPORT The Container
+									cd C:\Users\KRESHAN88\
+									docker import C:\Users\KRESHAN88\alpinetreeimage_k_out.tar kreshan88/alpinetreeimport_k:2.2.2
+									docker images  ----> can see the image hear
+									
+									
+						1.4.4.9) LOGIN / PUSH (push out image to Docker Hub) *******REPOSITERY_NAME:kreshan88 
+									docker login -u kreshan882@gmail.com -p Password#1		 ----> login success
+									docker images
+									docker push kreshan88/alpinetreeimport_k:2.2.2
+									https://hub.docker.com/ ----> can see the file now successfully
+									
+						1.4.4.10) BUILD (Run the DockerFile inside ubundu Custome Image)
+									Dockerfile
+										------------------------------------
+										#This is a sample image
+										FROM ubuntu
+										MAINTAINER kreshan882@gmail.com
+										RUN apt-get update
+										CMD ["echo","Image created k"]
+										------------------------------------
+										
+									docker build -t kreshan88/ubundu_withfile_echo C:\Users\KRESHAN88\Desktop\Dockertest\. ( -t(tagname:RepoName) Dockerfile readthe file and build the image)
+									docker images
+									
+						1.4.4.11) REMOVE CONTAINER / IMAGES 
+									1.4.4.11.1) Remove Container
+												docker ps -a
+												docker rm 9e0ef45ec86a d5b60ea57ab8 2043d2976d5f 15f1e6a5174b  ( Container_ids )
+												
+									1.4.4.11.2) Remove IMAGES
+												docker images -a
+												docker rmi 9c7a54a9a43c 8086b5811f85 (image_id)
+												docker rmi -f d559da885051 (forcefull remove , multi image with same imageID)
+												
+												
+			
+						1.4.4.12) Docker COMPOSE [Download/RUN zooKeeprt & Kafka using this docor-compose commend]
+									docker-compose -f C:\Users\KRESHAN88\Desktop\Dockertest\docker-compose.yml up -d  --------> run in backround -d success
+									dockers images      ----->confluentinc/zookeeper  confluentinc/cp-kafka created
+									docker-compose -f C:\Users\KRESHAN88\Desktop\Dockertest\docker-compose.yml down  ---------> zookeeper  & kafka removed success
+									
+									
+							
+		
+		1.5) Docker image create using Docorfile + build it + Upload to Docker HUB [min 36................]
+					1.5.1) create docker file [C:\Users\KRESHAN88\Desktop\Dockertest\CODETEST\Dockerfile] in Vs-code editor
+							create & modified the code (run below 2 & 3)
+							----------------------------------------------------------------------
+								#Base image is alpine(build with tree using This file)
+								FROM alpine:latest
+								LABEL maintainer="kreshanR"
+								RUN apk update
+								RUN apk add tree
+								#CMD with run, when Stating the container
+								CMD echo "Welcome to DockerFile testing K..............."
+								# copy testFile.txt into container(/bin/sh)
+								COPY testFile.txt ./
+								#ENTRYPOINT when deploy app, start cmd [java -jar app.jar]
+								#ENTRYPOINT [ "executable" ]
+							----------------------------------------------------------------------
+							
+					1.5.2) BUILD
+							cd C:\Users\KRESHAN88\Desktop\Dockertest\CODETEST\
+							docker build -t kreshan88/alpinetree_with_dockerfile C:\Users\KRESHAN88\Desktop\Dockertest\CODETEST\.
+							
+					1.5.3) Run
+							docker images
+							docker run -it --rm 13ad5d311f7e /bin/sh ( run intractive+ remove container after run)  
+								#tree
+								#ls    -----------> testFile.txt file avaliable
+								#exit
+	
+							docker run -it --rm de4644d70db8
+									======> Welcome to DockerFile testing K...............
+
+
+					1.5.4) REMOVE all docker images
+							docker rmi $(docker images -q -a)
+				   
+				   
+		1.6) USING DOCKER_COMPOSE upload Docker Hub
+					1.6.1) UserService --> Dockerfile	
+					1.6.2) DepartmentService --> Dockerfile				
+					1.6.3) docker-compose.yml
+					
+					1.6.4) BUILD
+							cd C:\Users\KRESHAN88\Desktop\Dockertest\COMPOSE_YML_TEST
+							1.4.4.1) docker-compose config   --> same outpot, then YML file is correct
+							
+							1.4.4.2) build & Up
+								docker-compose build
+								docker-compose up -d
+										OR
+										
+								docker-compose up -d --build  -------> buils + up in detatch(backround) in same line
+								
+							1.4.4.3) CHECK THE SERVICES localy - success
+									docker-compose images
+									
+									http://localhost:1234/kre_docker/3
+									http://localhost:1235/kre_docker/3
+							
+					1.6.5) DOCKER_COMPOSE Actions
+							docker-compose ps
+							docker-compose stop
+							docker-compose start
+							docker-compose restart
+							docker-compose kill
+							docker-compose logs (only can get user/department log also)
+							docker-compose top
+									
+							docker-compose exec user bash
+								#ls ----> user-servicek.jar avaliable hear
+								
+							docker-compose down  ---> remove all image & containers
+
+							docker-compose up -d --build
+							docker-compose ps  --------------------> show runing port
+							
+							
+					1.6.6) UPLOAD to DOCKER HUB
+							https://hub.docker.com/ --> REPOSITERY
+							
+							cd C:\Users\KRESHAN88\Desktop\Dockertest\COMPOSE_YML_TEST
+							docker login -u kreshan882@gmail.com -p Password#1
+							docker-compose push 
+
+					1.6.7) DOCKER PLAYGROUND (Usung docker-compose.yml file, PULL the image and RUN for 4 Hours only)
+							1.6.7.1) https://labs.play-with-docker.com/  ---> login with docker --> [DELETE] then Add new Instance
+								
+									pwd -----> root/
+									upload docker-compose.yml (drage and drop C:\Users\KRESHAN88\Desktop\Dockertest\COMPOSE_YML_TEST]docker-compose.yml)
+									
+									ls ----> docker-compose.yml
+									docker-compose pull  ---> download all
+									docker images
+									docker-compose up -d 
+									docker-compose ps   ----> runing port 1234 /1235
+								
+							1.7.6.2) DOCKER_PLAYGROUND-GUI 
+									[OPENPORT] ->1234 -> ok [url_generated] ==> url_generated/kre_docker/3 --> loaded success
+							
+					1.6.8) DOCKER-COMPOSE OVERRIDE file [docker-compose.override.yml]
+							** tow or more microservice project (docker-compose.yml) file manage in single file
+							NAME PROD / UAT : docker-compose.prod.yml | docker-compose.uat.yml
+							
+							1.6.8.1) create file docker-compose.override.yml
+										-----------------------------------------------------
+										version: '3'
+										services:
+										  department:
+											container_name: department_service_ovenew
+											image: kreshan88/department_ovenew
+											ports:
+											  - 1235:1235    //port also can chnage
+										-----------------------------------------------------
+										
+							1.6.8.2) Bild and upload to HUB
+									docker-compose up -d 
+									docker-compose ps   ----> name was changed
+									docker-compose images --> image name changed
+									
+									docker-compose -f .\docker-compose.yml -f .\docker-compose.overide.yml up -d ----> multi docker file runing in same script
+									docker-compose -f .\docker-compose.yml -f .\docker-compose.overide.yml down
+
+		
+################################# END SUCCESS ####################################################################################################################
+		
+			
+			
+			
+			
+			
+			
+					
+			
+			
+			
+			
+
+			
+							
+							
+							
+							
