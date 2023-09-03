@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kre.springfull.entity.Department;
+import com.kre.springfull.error.DepartmentNotFoundException;
 import com.kre.springfull.service.DepartmentService;
+
+import jakarta.validation.Valid;
 
 @RestController
 public class DepartmentController {
@@ -25,11 +28,13 @@ public class DepartmentController {
 	@Autowired  
 	private DepartmentService departmentService;
 	
+	//org.slf4j.Logger spring default
 	private final Logger LOGGER = LoggerFactory.getLogger(DepartmentController.class);
 	
 	//@RequestBody --> http request body --> Json Body-> Department object
 	//http://localhost:8082/departments
 	/*
+	 * departmentName van not blank, hibernate validation Addedd
 		{
 		    "departmentName":"ucsc",
 		    "departmentAddress":"colombo",
@@ -37,7 +42,7 @@ public class DepartmentController {
 		}
 	 */
 	@PostMapping("/departments")
-    public Department saveDepartment( @RequestBody Department department) {  
+    public Department saveDepartment(@Valid @RequestBody Department department) {  
         LOGGER.info("Inside saveDepartment of DepartmentController"+department);
         System.out.println("DepartmentController"+department);
         return departmentService.saveDepartment(department);
@@ -50,9 +55,9 @@ public class DepartmentController {
         return departmentService.fetchDepartmentList();
     }
 	
-    //with path variable
+    //with path variable & when no data exception is handeled
     @GetMapping("/departments/{idk}")
-    public Department getDepartmentwithid(@PathVariable("idk") Long departmentId) {
+    public Department getDepartmentwithid(@PathVariable("idk") Long departmentId) throws DepartmentNotFoundException {
         LOGGER.info("Get Department by Id");
         return departmentService.getDepartmentwithid(departmentId);
     }

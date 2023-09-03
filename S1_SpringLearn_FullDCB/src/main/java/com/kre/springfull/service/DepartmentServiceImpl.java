@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kre.springfull.entity.Department;
+import com.kre.springfull.error.DepartmentNotFoundException;
 import com.kre.springfull.repository.DepartmentRepository;
 
 //new DepartmentService()-> objact create and loaded to spring container( with @AutoWired can use it) 
@@ -31,8 +32,14 @@ public class DepartmentServiceImpl implements DepartmentService{
 
 
 
-	public Department getDepartmentwithid(Long departmentId) {
-		return departmentRepository.findById(departmentId).get();
+	public Department getDepartmentwithid(Long departmentId) throws DepartmentNotFoundException {
+		//return departmentRepository.findById(departmentId).get(); // exception handling
+		Optional<Department> deparement=departmentRepository.findById(departmentId);
+		if(!deparement.isPresent()) {
+			throw new DepartmentNotFoundException("Departmenr is not found ,handel exception k..");
+		}
+	
+		return deparement.get();
 	}
 
 

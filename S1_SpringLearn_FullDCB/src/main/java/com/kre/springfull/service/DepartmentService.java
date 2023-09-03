@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.kre.springfull.entity.Department;
+import com.kre.springfull.error.DepartmentNotFoundException;
 
  
 public interface DepartmentService {
@@ -13,7 +14,7 @@ public interface DepartmentService {
 
 	public List<Department> fetchDepartmentList();
 
-	public Department getDepartmentwithid(Long departmentId);
+	public Department getDepartmentwithid(Long departmentId) throws DepartmentNotFoundException;
 
 	public void deleteDepartmentById(Long departmentId);
 

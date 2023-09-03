@@ -47,9 +47,43 @@ https://www.youtube.com/watch?v=c3gKseNAs9w&t=7399s
 9) RequstController--> add/viewById/viewAll/update/delete / ViewByName min 59- 1.30
    DB data: JPA with methon nane --> JPQL ---> Native Query
 
-10) hibernate validation [Min 1.30...
-	
+10) hibernate validation [Min 1.30...]
+		spring-boot-starter-validation --> hibernate-validator
+		
+11) Logger add	
+		sla4j ---> spring default logger
+		log4j ---> can add libeary
+		
+12) Exception Handeling [1.48 Min-1.59 done]
+		new 
+			ErrorMessage
+			error/DepartmentNotFoundException
+			error/RestResponseEntityExceptionHandler
+			
+		modified
+			DepartmentServiceImpl
+			DepartmentService
+			DepartmentController
 
+
+13) h2-> mysql (proporty file & libeary change only)
+
+14) junit-jupiter(5) & mockito-junit-jupiter testing [2.05--2.20] ----> success 
+		14.1) integration TEST ( end to end , all 3 layer) 
+		
+		14.2) unit testing( service/ repositery / controler seperately
+				MOCKING: only test controler layer [not service layer | mocking the service layer]
+				
+				14.2.1) Test service layer 
+					Testing --> DepartmentService
+					Mock --> DepartmentRepository
+					
+					
+				[min 2.20 ..............] 
+				14.2.2) Test Repo layer
+				14.2.3) Test Control Layer
+		
+		
 
 	
 
