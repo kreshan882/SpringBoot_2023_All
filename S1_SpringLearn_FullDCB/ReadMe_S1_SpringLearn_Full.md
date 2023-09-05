@@ -78,11 +78,51 @@ https://www.youtube.com/watch?v=c3gKseNAs9w&t=7399s
 					Testing --> DepartmentService
 					Mock --> DepartmentRepository
 					
-					
-				[min 2.20 ..............] 
-				14.2.2) Test Repo layer
-				14.2.3) Test Control Layer
+				14.2.2) Test Repo layer [min 2.20] 
+				
+				14.2.3) Test Control Layer [2.28- 2.38 ]
+				
+15) read conf file data from java code
+
+16) CONVERT TO YML file [2.41]  =====> https://mageddo.com/tools/yaml-converter 
+	more human redable + remove duplicate value
+	application.proporty ---> application.YML
+	
+17) SpringBoot Profile (in YML file)
+		Dev
+		QA
+		PROD
+18) BUILD the project & RUN with profile
+		cd D:\1_JAVA_SPRINGBOOT_K\S1_SpringLearn_FullDCB
+		mvn clean install
+		java -jar target/S1_SpringLearn_FullDCB_K-1.0.1.jar --some.profiles.active=PROD
 		
+19) ACTUATOR (view and block spring main modules ex:beans, schadulers...) [2.55]
+		helthi
+		beans
+		schaduler
+		
+		Monitor PATH: http://127.0.0.1:8082/actuator
+			END POINTS 
+				1) helth up [default enabled] 
+				2) info 
+				3) loggers
+				4) schadule task
+				5) env
+				
+			Enable all end POINTS
+				Update yml file
+
+20) create NEW ENDPOINT [3.02]
+		create new calss --> MyEndpoint_Actuvator_k 	
+		CHECk new end POINTS
+			http://127.0.0.1:8082/actuator/features
+			http://127.0.0.1:8082/actuator/features/Department
+			http://127.0.0.1:8082/actuator/features/User
+
+		
+		
+########################################### End Completed ##################################################
 		
 
 	

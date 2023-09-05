@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.kre</groupId>
-	<artifactId>S1_SpringLearn_FullDCB</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>S1_SpringLearn_FullDCB_K</artifactId>
+	<version>1.0.1</version>
 	<name>S1_SpringLearn_FullDCB</name>
 	<description>S1_SpringLearn_FullDCB</description>
 	<properties>
@@ -40,6 +40,12 @@
 		</dependency>
 		
 	<!--	Auto rebuild when change in code , eg: nodemon -->
+	
+		<dependency>
+	     	<groupId>org.springframework.boot</groupId>
+	      	<artifactId>spring-boot-starter-actuator</artifactId>
+	    </dependency>
+	    
 		<dependency>
 	      <groupId>org.springframework.boot</groupId>
 	      <artifactId>spring-boot-devtools</artifactId>
@@ -63,6 +69,8 @@
 			<scope>runtime</scope>
 		</dependency>
 		
+		
+    
 	</dependencies>
 
 	<build>

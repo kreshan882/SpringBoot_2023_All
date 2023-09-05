@@ -1,0 +1,46 @@
+## YML online converter https://mageddo.com/tools/yaml-converter 
+
+server:
+    port: 8082
+spring:
+    datasource:
+        driver-class-name: org.h2.Driver
+        password: SPR_LERN
+        url: jdbc:h2:mem:testdb;INIT=CREATE SCHEMA IF NOT EXISTS SPR_LERN
+        username: SPR_LERN
+    h2:
+        console:
+            enabled: true
+            path: /h2K
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect
+
+# enable all actuvator endpoimts
+management:
+    endpoints:
+      web:
+        exposure:
+          include: "*"
+          exclude: "env,beans,info"
+
+
+#profile configration (with below 3 files)
+# http://127.0.0.1:8082/
+some:
+    profiles:
+      active: PROD
+---
+        
+some:
+    profiles: DEV
+    configk: responce from config file DEV
+    
+---
+some:
+    profiles: QA
+    configk: responce from config file QA
+    
+---
+some:
+    profiles: PROD
+    configk: responce from config file PROD

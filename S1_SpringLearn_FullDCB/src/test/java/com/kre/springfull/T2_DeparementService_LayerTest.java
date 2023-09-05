@@ -15,7 +15,7 @@ import com.kre.springfull.repository.DepartmentRepository;
 import com.kre.springfull.service.DepartmentService;
 
 @SpringBootTest
-public class T2_DeparementServiceTest {
+public class T2_DeparementService_LayerTest {
 
 	@Autowired
 	private DepartmentService departmentService;
@@ -34,7 +34,7 @@ public class T2_DeparementServiceTest {
 								.build();
 		
 		Mockito.when(departmentRepository.findByDepartmentNameIgnoreCase("ucsc22"))
-			   .thenReturn(department);
+			   .thenReturn(department); // when call this function , it will mock this hardcoded value
 		
 	}
 	
@@ -43,10 +43,10 @@ public class T2_DeparementServiceTest {
 	public void whenValidDeparementName_thenDeparementShouldFound() {
 		String DEPARTMENT_NAME="ucsc22";
 		
-		//this will call repository layer, But we do not need that
+		//this will call repository layer, in Repository we mock the function() same as above
 		Department found= departmentService.getDepartmentwithName(DEPARTMENT_NAME);
 		
-		assertEquals(DEPARTMENT_NAME, found.getDepartmentName());
+		assertEquals("ucsc22", found.getDepartmentName());
 	}
 	
 }
