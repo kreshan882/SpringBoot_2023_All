@@ -1,0 +1,23 @@
+
+server:
+    port: 8082
+    
+spring:
+    datasource:
+        driver-class-name: org.h2.Driver 
+        url: jdbc:h2:mem:testdb; 
+        username: SPR_SEQ
+        password: SPR_SEQ
+    h2:
+        console:
+            enabled: true
+            path: /h2K
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect
+        
+        
+##H2 Database ===> http://localhost:8082/h2K/
+##    Generic H2 (Embedded)
+##    org.h2.Driver
+##    jdbc:h2:mem:testdb
+##    SPR_SEQ/SPR_SEQ
