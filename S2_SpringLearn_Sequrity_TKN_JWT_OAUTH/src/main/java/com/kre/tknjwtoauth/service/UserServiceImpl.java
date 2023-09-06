@@ -1,7 +1,7 @@
 package com.kre.tknjwtoauth.service;
 
 import com.kre.tknjwtoauth.entity.PasswordResetToken;
-import com.kre.tknjwtoauth.entity.User;
+import com.kre.tknjwtoauth.entity.Userk;
 import com.kre.tknjwtoauth.entity.VerificationToken;
 import com.kre.tknjwtoauth.model.UserModel;
 import com.kre.tknjwtoauth.repository.PasswordResetTokenRepository;
@@ -27,24 +27,25 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordResetTokenRepository passwordResetTokenRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Override
-    public User registerUser(UserModel userModel) {
-        User user = new User();
+    public Userk registerUser(UserModel userModel) {
+        Userk user = new Userk();
         user.setEmail(userModel.getEmail());
         user.setFirstName(userModel.getFirstName());
         user.setLastName(userModel.getLastName());
         user.setRole("USER");
-        user.setPassword(passwordEncoder.encode(userModel.getPassword()));
+        user.setPassword(userModel.getPassword());
+        //user.setPassword(passwordEncoder.encode(userModel.getPassword()));
 
         userRepository.save(user);
         return user;
     }
 
     @Override
-    public void saveVerificationTokenForUser(String token, User user) {
+    public void saveVerificationTokenForUser(String token, Userk user) {
         VerificationToken verificationToken
                 = new VerificationToken(user, token);
 
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
             return "invalid";
         }
 
-        User user = verificationToken.getUser();
+        Userk user = verificationToken.getUser();
         Calendar cal = Calendar.getInstance();
 
         if ((verificationToken.getExpirationTime().getTime()
@@ -84,12 +85,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public Userk findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public void createPasswordResetTokenForUser(User user, String token) {
+    public void createPasswordResetTokenForUser(Userk user, String token) {
         PasswordResetToken passwordResetToken
                 = new PasswordResetToken(user,token);
         passwordResetTokenRepository.save(passwordResetToken);
@@ -104,7 +105,7 @@ public class UserServiceImpl implements UserService {
             return "invalid";
         }
 
-        User user = passwordResetToken.getUser();
+        Userk user = passwordResetToken.getUser();
         Calendar cal = Calendar.getInstance();
 
         if ((passwordResetToken.getExpirationTime().getTime()
@@ -117,18 +118,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByPasswordResetToken(String token) {
+    public Optional<Userk> getUserByPasswordResetToken(String token) {
         return Optional.ofNullable(passwordResetTokenRepository.findByToken(token).getUser());
     }
 
     @Override
-    public void changePassword(User user, String newPassword) {
-        user.setPassword(passwordEncoder.encode(newPassword));
+    public void changePassword(Userk user, String newPassword) {
+        //user.setPassword(passwordEncoder.encode(newPassword));
+        user.setPassword(newPassword);
         userRepository.save(user);
     }
 
     @Override
-    public boolean checkIfValidOldPassword(User user, String oldPassword) {
-        return passwordEncoder.matches(oldPassword, user.getPassword());
+    public boolean checkIfValidOldPassword(Userk user, String oldPassword) {
+       
+    	return oldPassword.equals(user.getPassword());
+    	//return  passwordEncoder.matches(oldPassword, user.getPassword());
     }
 }

@@ -1,6 +1,6 @@
 package com.kre.tknjwtoauth.controller;
 
-import com.kre.tknjwtoauth.entity.User;
+import com.kre.tknjwtoauth.entity.Userk;
 import com.kre.tknjwtoauth.entity.VerificationToken;
 import com.kre.tknjwtoauth.event.RegistrationCompleteEvent;
 import com.kre.tknjwtoauth.model.PasswordModel;
@@ -29,7 +29,8 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public String registerUser(@RequestBody UserModel userModel, final HttpServletRequest request) {
-        User user = userService.registerUser(userModel);
+        System.out.println("---->"+userModel);
+    	Userk user = userService.registerUser(userModel);
         publisher.publishEvent(new RegistrationCompleteEvent(
                 user,
                 applicationUrl(request)
@@ -52,14 +53,14 @@ public class RegistrationController {
                                           HttpServletRequest request) {
         VerificationToken verificationToken
                 = userService.generateNewVerificationToken(oldToken);
-        User user = verificationToken.getUser();
+        Userk user = verificationToken.getUser();
         resendVerificationTokenMail(user, applicationUrl(request), verificationToken);
         return "Verification Link Sent";
     }
 
     @PostMapping("/resetPassword")
     public String resetPassword(@RequestBody PasswordModel passwordModel, HttpServletRequest request) {
-        User user = userService.findUserByEmail(passwordModel.getEmail());
+        Userk user = userService.findUserByEmail(passwordModel.getEmail());
         String url = "";
         if(user!=null) {
             String token = UUID.randomUUID().toString();
@@ -76,7 +77,7 @@ public class RegistrationController {
         if(!result.equalsIgnoreCase("valid")) {
             return "Invalid Token";
         }
-        Optional<User> user = userService.getUserByPasswordResetToken(token);
+        Optional<Userk> user = userService.getUserByPasswordResetToken(token);
         if(user.isPresent()) {
             userService.changePassword(user.get(), passwordModel.getNewPassword());
             return "Password Reset Successfully";
@@ -87,7 +88,7 @@ public class RegistrationController {
 
     @PostMapping("/changePassword")
     public String changePassword(@RequestBody PasswordModel passwordModel){
-        User user = userService.findUserByEmail(passwordModel.getEmail());
+        Userk user = userService.findUserByEmail(passwordModel.getEmail());
         if(!userService.checkIfValidOldPassword(user,passwordModel.getOldPassword())) {
             return "Invalid Old Password";
         }
@@ -96,7 +97,7 @@ public class RegistrationController {
         return "Password Changed Successfully";
     }
 
-    private String passwordResetTokenMail(User user, String applicationUrl, String token) {
+    private String passwordResetTokenMail(Userk user, String applicationUrl, String token) {
         String url =
                 applicationUrl
                         + "/savePassword?token="
@@ -109,7 +110,7 @@ public class RegistrationController {
     }
 
 
-    private void resendVerificationTokenMail(User user, String applicationUrl, VerificationToken verificationToken) {
+    private void resendVerificationTokenMail(Userk user, String applicationUrl, VerificationToken verificationToken) {
         String url =
                 applicationUrl
                         + "/verifyRegistration?token="

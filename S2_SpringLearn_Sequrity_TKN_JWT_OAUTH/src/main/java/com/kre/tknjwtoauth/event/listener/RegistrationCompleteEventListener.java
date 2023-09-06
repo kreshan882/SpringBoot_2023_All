@@ -1,6 +1,6 @@
 package com.kre.tknjwtoauth.event.listener;
 
-import com.kre.tknjwtoauth.entity.User;
+import com.kre.tknjwtoauth.entity.Userk;
 import com.kre.tknjwtoauth.event.RegistrationCompleteEvent;
 import com.kre.tknjwtoauth.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class RegistrationCompleteEventListener implements
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent event) {
         //Create the Verification Token for the User with Link
-        User user = event.getUser();
+        Userk user = event.getUser();
         String token = UUID.randomUUID().toString();
         userService.saveVerificationTokenForUser(token,user);
         //Send Mail to user

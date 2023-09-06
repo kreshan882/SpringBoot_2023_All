@@ -1,29 +1,29 @@
 package com.kre.tknjwtoauth.service;
 
-import com.kre.tknjwtoauth.entity.User;
+import com.kre.tknjwtoauth.entity.Userk;
 import com.kre.tknjwtoauth.entity.VerificationToken;
 import com.kre.tknjwtoauth.model.UserModel;
 
 import java.util.Optional;
 
 public interface UserService {
-    User registerUser(UserModel userModel);
+    Userk registerUser(UserModel userModel);
 
-    void saveVerificationTokenForUser(String token, User user);
+    void saveVerificationTokenForUser(String token, Userk user);
 
     String validateVerificationToken(String token);
 
     VerificationToken generateNewVerificationToken(String oldToken);
 
-    User findUserByEmail(String email);
+    Userk findUserByEmail(String email);
 
-    void createPasswordResetTokenForUser(User user, String token);
+    void createPasswordResetTokenForUser(Userk user, String token);
 
     String validatePasswordResetToken(String token);
 
-    Optional<User> getUserByPasswordResetToken(String token);
+    Optional<Userk> getUserByPasswordResetToken(String token);
 
-    void changePassword(User user, String newPassword);
+    void changePassword(Userk user, String newPassword);
 
-    boolean checkIfValidOldPassword(User user, String oldPassword);
+    boolean checkIfValidOldPassword(Userk user, String oldPassword);
 }

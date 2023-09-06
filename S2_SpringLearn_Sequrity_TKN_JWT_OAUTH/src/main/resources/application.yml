@@ -1,17 +1,30 @@
 server:
     port: 8082
-
 spring:
     datasource:
-        driver-class-name: org.h2.Driver 
-        url: jdbc:h2:mem:testdb;INIT=CREATE SCHEMA IF NOT EXISTS SPR_SEQ 
-        username: SPR_SEQ
-        password: SPR_SEQ
-    h2:
-        console:
-            enabled: true
-            path: /h2K
+        url: jdbc:mysql://localhost:3306/spring_seq
+        username: root
+        password: password
     jpa:
-        database-platform: org.hibernate.dialect.H2Dialect
-        hibernate: 
+        hibernate:
             ddl-auto: update
+        show-sql: true 
+        
+###H2 db connection issue with spring sequriry
+#spring:
+#    datasource:
+#        driver-class-name: org.h2.Driver 
+#        url: jdbc:h2:mem:testdb;INIT=CREATE SCHEMA IF NOT EXISTS SPR_SEQ 
+#        username: SPR_SEQ
+#        password: SPR_SEQ
+#    h2:
+#        console:
+#            enabled: true
+#            path: /h2K
+#    jpa:
+#        database-platform: org.hibernate.dialect.H2Dialect
+#        hibernate: 
+#            ddl-auto: update
+
+
+
