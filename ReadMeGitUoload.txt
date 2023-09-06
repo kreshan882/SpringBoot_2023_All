@@ -19,7 +19,7 @@ git init
 git add ReadMeGitUoload.txt .gitignore SpringLearn_JPA/ SpringLearn_MongoDb/ SpringLearn_Docker-JAR/ 
 git add S1_SpringLearn_FullDCB/ ReadMeGitUoload.txt
 git add S2_SpringLearn_Sequrity_TKN_JWT_OAUTH/ ReadMeGitUoload.txt
-git commit -m "first commit"
+git commit -m "commit 1"
 git branch -M main
 git remote add origin https://github.com/kreshan882/SpringBoot_2023_All.git
 git push -u origin main

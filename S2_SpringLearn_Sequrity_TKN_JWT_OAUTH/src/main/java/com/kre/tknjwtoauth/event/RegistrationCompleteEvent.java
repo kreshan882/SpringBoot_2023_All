@@ -1,15 +1,15 @@
 package com.kre.tknjwtoauth.event;
 
+import com.kre.tknjwtoauth.entity.User;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 
-import com.kre.tknjwtoauth.entity.User;
-
-import lombok.Data;
-
-
-//this event create for: create tocken & send email when register
-@Data
-public class RegistrationCompleteEvent extends ApplicationEvent  { 
+@Getter
+@Setter
+public class RegistrationCompleteEvent extends ApplicationEvent {
 
     private final User user;
     private final String applicationUrl;

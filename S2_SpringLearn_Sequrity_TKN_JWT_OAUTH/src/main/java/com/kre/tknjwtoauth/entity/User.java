@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+
+
 @Entity
 @Data
 public class User {
@@ -18,7 +20,7 @@ public class User {
     private String lastName;
     private String email;
 
-    @Column(length = 60)   // maximum password length is 60
+    @Column(length = 60)
     private String password;
 
     private String role;

@@ -1,36 +1,37 @@
 package com.kre.tknjwtoauth.event.listener;
 
-import java.util.UUID;
-
+import com.kre.tknjwtoauth.entity.User;
+import com.kre.tknjwtoauth.event.RegistrationCompleteEvent;
+import com.kre.tknjwtoauth.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import com.kre.tknjwtoauth.entity.User;
-import com.kre.tknjwtoauth.event.RegistrationCompleteEvent;
-import com.kre.tknjwtoauth.service.UserService;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.UUID;
 
 @Component
 @Slf4j
-public class RegistrationCompleteEventListener implements ApplicationListener<RegistrationCompleteEvent> {
+public class RegistrationCompleteEventListener implements
+        ApplicationListener<RegistrationCompleteEvent> {
 
-	@Autowired
-	private UserService userService;
-	
-	
-	@Override
-	public void onApplicationEvent(RegistrationCompleteEvent event) {
-		//Create the Verification Token for the User with Link
-		User user = event.getUser();
-		String token = UUID.randomUUID().toString();
-		userService.saveVerificationTokenForUser(token,user);  // save tocken details in DB
-		
-		//Send Mail to user
-		String url =event.getApplicationUrl() + "/verifyRegistration?token="+ token;
-		
-		//sendVerificationEmail()
-		log.info("Click the link to verify your account: {}", url);
-	}
+    @Autowired
+    private UserService userService;
+
+    @Override
+    public void onApplicationEvent(RegistrationCompleteEvent event) {
+        //Create the Verification Token for the User with Link
+        User user = event.getUser();
+        String token = UUID.randomUUID().toString();
+        userService.saveVerificationTokenForUser(token,user);
+        //Send Mail to user
+        String url =
+                event.getApplicationUrl()
+                        + "/verifyRegistration?token="
+                        + token;
+
+        //sendVerificationEmail()
+        log.info("Click the link to verify your account: {}",
+                url);
+    }
 }
