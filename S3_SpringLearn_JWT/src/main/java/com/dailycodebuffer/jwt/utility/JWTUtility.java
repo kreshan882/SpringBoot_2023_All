@@ -13,6 +13,7 @@
 //import java.util.Map;
 //import java.util.function.Function;
 //
+// // all tocken function avaliable heat (create+ validateToken+ isExporeToken)
 //@Component
 //public class JWTUtility implements Serializable {
 //

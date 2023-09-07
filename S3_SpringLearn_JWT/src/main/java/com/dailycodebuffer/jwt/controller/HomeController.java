@@ -19,14 +19,16 @@ public class HomeController {
 
 //    @Autowired
 //    private JWTUtility jwtUtility;
+//
+//    @Autowired
+//    private AuthenticationManager authenticationManager;
+//
+//    @Autowired
+//    private UserService userService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserService userService;
-
-    @GetMapping("/") // before the our request need to Authondicate
+    // http://localhost:8084/ 
+    // before the our request need to, loging with UN: kreshan/Pw: password - but not working
+    @GetMapping("/") 
     public String home() {
         return "Welcome to Daily Code Buffer!!";
     }
