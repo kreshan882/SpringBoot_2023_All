@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.kre</groupId>
-	<artifactId>S2_SpringLearn_Sequrity_TKN_JWT_OAUTH</artifactId>
+	<artifactId>S2_SpringLearn_Sequrity_TKN_OAUTH</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>S2_SpringLearn_Sequrity_TKN_JWT_OAUTH</name>
-	<description>S2_SpringLearn_Sequrity_TKN_JWT_OAUTH</description>
+	<name>S2_SpringLearn_Sequrity_TKN_OAUTH</name>
+	<description>S2_SpringLearn_Sequrity_TKN_OAUTH</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
