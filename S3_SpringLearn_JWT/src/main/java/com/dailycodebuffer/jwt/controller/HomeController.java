@@ -1,8 +1,10 @@
 package com.dailycodebuffer.jwt.controller;
 
-//import com.dailycodebuffer.jwt.model.JwtRequest;
-//import com.dailycodebuffer.jwt.model.JwtResponse;
+import com.dailycodebuffer.jwt.model.JwtRequest;
+import com.dailycodebuffer.jwt.model.JwtResponse;
 import com.dailycodebuffer.jwt.service.UserService;
+import com.dailycodebuffer.jwt.utility.JWTUtility;
+
 //import com.dailycodebuffer.jwt.utility.JWTUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 
-//    @Autowired
-//    private JWTUtility jwtUtility;
-//
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
-//
-//    @Autowired
-//    private UserService userService;
+    @Autowired
+    private JWTUtility jwtUtility;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private UserService userService;
 
     // http://localhost:8084/ 
     // before the our request need to, loging with UN: kreshan/Pw: password - but not working
@@ -33,26 +35,25 @@ public class HomeController {
         return "Welcome to Daily Code Buffer!!";
     }
 
-//    @PostMapping("/authenticate")
-//    public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
-//
-//        try {
-//            authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(
-//                            jwtRequest.getUsername(),
-//                            jwtRequest.getPassword()
-//                    )
-//            );
-//        } catch (BadCredentialsException e) {
-//            throw new Exception("INVALID_CREDENTIALS", e);
-//        }
-//
-//        final UserDetails userDetails
-//                = userService.loadUserByUsername(jwtRequest.getUsername());
-//
-//        final String token =
-//                jwtUtility.generateToken(userDetails);
-//
-//        return  new JwtResponse(token);
-//    }
+    //white losted url for generate token
+    @PostMapping("/authenticate")
+    public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            jwtRequest.getUsername(),
+                            jwtRequest.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
+
+        final UserDetails userDetails = userService.loadUserByUsername(jwtRequest.getUsername());
+
+        final String token =  jwtUtility.generateToken(userDetails);
+
+        return  new JwtResponse(token);
+    }
 }

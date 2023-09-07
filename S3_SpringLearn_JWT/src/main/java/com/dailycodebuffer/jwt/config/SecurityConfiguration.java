@@ -1,6 +1,6 @@
 package com.dailycodebuffer.jwt.config;
 
-//import com.dailycodebuffer.jwt.filter.JwtFilter;
+import com.dailycodebuffer.jwt.filter.JwtFilter;
 import com.dailycodebuffer.jwt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +20,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Autowired
     private UserService userService; //extern with UserDetailsService (spring seq) 
 
-//    @Autowired
-//    private JwtFilter jwtFilter;
+    
+    @Autowired
+    private JwtFilter jwtFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -29,25 +30,35 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         auth.userDetailsService(userService);  // call to DB and validate (by pass this) 
     }
 
-//    @Override
-//    @Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf()
-//                .disable()
-//                .authorizeRequests()
-//                .antMatchers("/authenticate")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//    }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+//    	http.csrf()
+//        .disable()
+//        .authorizeRequests()
+//        .antMatchers("/authenticate")
+//        .permitAll()
+//        .anyRequest()
+//        .authenticated();
+    	
+    	http.csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers("/authenticate")  // whitelist url
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .sessionManagement()   // inform to dont use OLD state full session manager
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); 
+    	
+    	// token Authondication filter (all requesr atthindicate with token filter
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); 
+
+    }
 }

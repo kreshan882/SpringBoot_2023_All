@@ -3,5 +3,5 @@ server:
 
 
 
-#jwt:
-#  secret: secretkey123
+jwt:
+  secret: secretkey123
