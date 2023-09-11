@@ -1,7 +1,6 @@
 # upload ignore file list
 
 .metadata/
-!**/.settings
 
 SpringLearn_JPA/target/ 
 SpringLearn_MongoDb/target/ 
