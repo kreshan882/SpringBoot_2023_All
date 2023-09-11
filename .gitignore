@@ -1,14 +1,13 @@
-HELP.md
-target/
-DockerUploadTst/
-KubernetsUploadTst2/
-SpringBoot_202308_Learn/
-SpringBootH2JspWebBknSimulator/
-spring-sequrity/
-TestSprinBoot_Test/
+# upload ignore file list
 
-SpringLearn_JPA/target/
-SpringLearn_MongoDb/target/
-S1_SpringLearn_FullDCB/target/
-S1_SpringLearn_FullDCB/target/
-/.metadata/
+.metadata/
+!**/.settings
+
+SpringLearn_JPA/target/ 
+SpringLearn_MongoDb/target/ 
+SpringLearn_Docker-JAR/target/ 
+S1_SpringLearn_FullDCB/target/ 
+S2_SpringLearn_Sequrity_TKN_OAUTH/target/
+		
+
+
