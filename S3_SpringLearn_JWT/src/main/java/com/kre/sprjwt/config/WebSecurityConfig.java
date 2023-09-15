@@ -34,17 +34,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        // configure AuthenticationManager so that it knows from where to load
-        // user for matching credentials
-        // Use BCryptPasswordEncoder
-        //auth.userDetailsService(sprSeqUserDetSer).passwordEncoder(passwordEncoder());
+        //auth.userDetailsService(sprSeqUserDetSer).passwordEncoder(passwordEncoder()); // with encoded password
         auth.userDetailsService(sprSeqUserDetSer); // without encode
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        //return new BCryptPasswordEncoder();
-        return NoOpPasswordEncoder.getInstance();
+        //return new BCryptPasswordEncoder();  // with encoded password
+        return NoOpPasswordEncoder.getInstance();  //with out encode
     }
 
     @Bean
@@ -54,18 +51,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        	// We don't need CSRF for this example
-        	httpSecurity.csrf().disable()
-                // dont authenticate this particular request
-                .authorizeRequests().antMatchers("/authenticate").permitAll().
-                // all other requests need to be authenticated
-                        anyRequest().authenticated().and()
-                // make sure we use stateless session; session won't be used to
-                // store user's state.
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);        // Add a filter to validate the tokens with every request
+    protected void configure(HttpSecurity httpSeq) throws Exception {
+
+    	   //Cross-Site Request Forgery attacks
+    	   // white list page
+    	   // all other requests need to be authenticated
+        	httpSeq.csrf().disable()
+                   .authorizeRequests().antMatchers("/authenticate","/wlist").permitAll()  
+                   .anyRequest().authenticated().and()
+                   .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                   .sessionManagement()
+                   .sessionCreationPolicy(SessionCreationPolicy.STATELESS);        // Add a filter to validate the tokens with every request
         
-        	httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        	httpSeq.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
