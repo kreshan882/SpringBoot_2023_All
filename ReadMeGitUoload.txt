@@ -9,6 +9,7 @@ git init
 	git add SpringLearn_Docker-JAR/ 
 	git add S1_SpringLearn_FullDCB/ 
 	git add S2_SpringLearn_Sequrity_TKN_OAUTH/
+	git add S3_SpringLearn_JWT/
 	
 git commit -m "commit 1"AS
 git branch -M main
