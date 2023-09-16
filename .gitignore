@@ -2,13 +2,13 @@
 
 .metadata/
 
-SpringLearn_JPA/target/ 
+ 
  
 SpringLearn_Docker-JAR/target/ 
 S1_SpringLearn_FullDCB/target/ 
 S2_SpringLearn_Sequrity_TKN_OAUTH/target/
 S3_SpringLearn_JWT/target/
-
+S4_SpringLearn_JPA/target/
 S5_SpringLearn_MongoDb/target/
 		
 

@@ -4,11 +4,12 @@
 cd D:\1_JAVA_SPRINGBOOT_K
 git init
 	git add ReadMeGitUoload.txt .gitignore (when new project come) 
-	git add SpringLearn_JPA/ 
+	 
 	git add SpringLearn_Docker-JAR/ 
 	git add S1_SpringLearn_FullDCB/ 
 	git add S2_SpringLearn_Sequrity_TKN_OAUTH/
 	git add S3_SpringLearn_JWT/
+	git add S4_SpringLearn_JPA/
 	git add S5_SpringLearn_MongoDb/
 	
 git commit -m "commit 1"AS
