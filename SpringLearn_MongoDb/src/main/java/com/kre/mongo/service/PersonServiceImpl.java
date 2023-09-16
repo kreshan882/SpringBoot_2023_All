@@ -52,75 +52,86 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public Page<Person> search(String name, Integer minAge, Integer maxAge, String city, Pageable pageable) {
 
+    	//org.spring...mongodb.core.query || not org.spring....mongodb.repository.Query
         Query query = new Query().with(pageable);
         List<Criteria> criteria = new ArrayList<>();
 
-        if(name !=null && !name.isEmpty()) {
-            criteria.add(Criteria.where("firstName").regex(name,"i"));
-        }
+	        if(name !=null && !name.isEmpty()) {
+	            criteria.add(Criteria.where("firstName").regex(name,"i")); 
+	            //Criteria obj passing===> varname: Person.firstName | regex=reguler expresion | in_case sensivive (i)  
+	        }
+	
+	        if(minAge !=null && maxAge !=null) {
+	            criteria.add(Criteria.where("age").gte(minAge).lte(maxAge));
+	        }
+	
+	        if(city !=null && !city.isEmpty()) {
+	            criteria.add(Criteria.where("addresses.city").is(city));
+	        }
 
-        if(minAge !=null && maxAge !=null) {
-            criteria.add(Criteria.where("age").gte(minAge).lte(maxAge));
-        }
-
-        if(city !=null && !city.isEmpty()) {
-            criteria.add(Criteria.where("addresses.city").is(city));
-        }
-
-        if(!criteria.isEmpty()) {
-            query.addCriteria(new Criteria()
-                    .andOperator(criteria.toArray(new Criteria[0])));
+	    // 3 search variable criteria avaliable
+	    // Add criteria --> query.with(pageable)
+        if(!criteria.isEmpty()) { 
+            query.addCriteria(
+            		new Criteria().andOperator(criteria.toArray(new Criteria[0])) //add all criteria with [AND] operator 
+            		);
         }
 
         Page<Person> people = PageableExecutionUtils.getPage(
-                mongoTemplate.find(query, Person.class
-                ), pageable, () -> mongoTemplate.count(query.skip(0).limit(0),Person.class));
+                mongoTemplate.find(query, Person.class),  //get person data with where condition
+                pageable, 								  //Eg: page number-2, page batch size-10
+                () -> mongoTemplate.count(query.skip(0).limit(0),Person.class)); //get person count with where condition
         return people;
     }
 
+    
+    
+    //groupBy operator || Aggregation functions--> oldest person in the cites
+    /*
+     person
+     	age
+     	addresses
+     		city
+     */
     @Override
     public List<Document> getOldestPersonByCity() {
-        UnwindOperation unwindOperation
-                = Aggregation.unwind("addresses");
-        SortOperation sortOperation
-                = Aggregation.sort(Sort.Direction.DESC,"age");
-        GroupOperation groupOperation
-                = Aggregation.group("addresses.city")
-                .first(Aggregation.ROOT)
-                .as("oldestPerson");
+    	
+    	// Person.addresses array de-constructing |create separate [Document] for each item in array]
+        UnwindOperation unwindOperation = Aggregation.unwind("addresses");  	 
+        
+        SortOperation sortOperation = Aggregation.sort(Sort.Direction.DESC,"age"); // Person.age sort desc (oldest persion comes first)
+        GroupOperation groupOperation = Aggregation.group("addresses.city")     
+                								   .first(Aggregation.ROOT)        // first value is oldest persion
+                								   .as("oldestPerson");            // Person.addresses.city group by
 
-        Aggregation aggregation
-                = Aggregation.newAggregation(unwindOperation,sortOperation,groupOperation);
+        Aggregation aggregation = Aggregation.newAggregation(unwindOperation,sortOperation,groupOperation); //Aggregation all 3 sequencely
 
-        List<Document> person
-                = mongoTemplate.aggregate(aggregation, Person.class,Document.class).getMappedResults();
+        // mongoTemplate.aggregate(aggtecationOperation, input_Person, output_Document)
+        List<Document> person = mongoTemplate.aggregate(aggregation, Person.class,Document.class).getMappedResults();
         return person;
     }
 
+    /*
+    person
+    	addresses
+    		city --> group By city (person count)	
+    */
     @Override
     public List<Document> getPopulationByCity() {
 
-        UnwindOperation unwindOperation
-                = Aggregation.unwind("addresses");
-        GroupOperation groupOperation
-                = Aggregation.group("addresses.city")
-                .count().as("popCount");
-        SortOperation sortOperation
-                = Aggregation.sort(Sort.Direction.DESC, "popCount");
+        UnwindOperation unwindOperation = Aggregation.unwind("addresses");
+        GroupOperation groupOperation = Aggregation.group("addresses.city").count().as("popCount");
+        SortOperation sortOperation  = Aggregation.sort(Sort.Direction.DESC, "popCount");
+        
+       //new projection ---> { city:"aaa", count,13 }  , remove _id
+        ProjectionOperation projectionOperation = Aggregation.project().andExpression("_id").as("city")
+        															   .andExpression("popCount").as("count")
+        															   .andExclude("_id");
 
-        ProjectionOperation projectionOperation
-                = Aggregation.project()
-                .andExpression("_id").as("city")
-                .andExpression("popCount").as("count")
-                .andExclude("_id");
+        Aggregation aggregation = Aggregation.newAggregation(unwindOperation,groupOperation,sortOperation,projectionOperation);
 
-        Aggregation aggregation
-                = Aggregation.newAggregation(unwindOperation,groupOperation,sortOperation,projectionOperation);
-
-        List<Document> documents
-                = mongoTemplate.aggregate(aggregation,
-                Person.class,
-                Document.class).getMappedResults();
+        List<Document> documents = mongoTemplate.aggregate(aggregation,Person.class,Document.class).getMappedResults();
+        
         return  documents;
     }
 

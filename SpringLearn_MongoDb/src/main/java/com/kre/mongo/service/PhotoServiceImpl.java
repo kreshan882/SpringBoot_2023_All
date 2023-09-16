@@ -19,12 +19,13 @@ public class PhotoServiceImpl implements PhotoService{
 
     @Override
     public String addPhoto(String originalFilename, MultipartFile image) throws IOException {
-        Photo photo
-                = new Photo();
-//        photo.setTitle(originalFilename);
-//        photo.setPhoto(new Binary(BsonBinarySubType.BINARY,image.getBytes()));
-//        return photoRepository.save(photo).getId();
-        return photoRepository.save(photo).toString();
+        
+    	  Photo photo = new Photo();
+	    	  photo.setTitle(originalFilename);
+	    	  photo.setPhoto(new Binary(BsonBinarySubType.BINARY,image.getBytes()));
+        
+	      return photoRepository.save(photo).getId();
+       // return photoRepository.save(photo).toString();
     }
 
     @Override

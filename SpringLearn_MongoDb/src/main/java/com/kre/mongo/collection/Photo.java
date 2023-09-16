@@ -16,5 +16,5 @@ public class Photo {
     @Id
     private String id;
     private String title;
-    private Binary photo;
+    private Binary photo;   // photo store this colume/Files
 }

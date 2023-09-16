@@ -12,8 +12,8 @@ import lombok.Data;
 
 @Data
 @Builder
-@Document(collection = "person")
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Document(collection = "person")  //endity name
+@JsonInclude(JsonInclude.Include.NON_NULL) // non null value only store to mongo db
 public class Person {
 
     @Id

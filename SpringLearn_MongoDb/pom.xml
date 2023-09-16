@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.2</version>
+        <relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.kre</groupId>
 	<artifactId>SpringLearn_MongoDb</artifactId>
@@ -14,7 +14,7 @@
 	<name>SpringLearn_MongoDb</name>
 	<description>SpringLearn_MongoDb</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

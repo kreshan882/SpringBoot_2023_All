@@ -23,19 +23,18 @@ public class PhotoController {
 
     @PostMapping
     public String addPhoto(@RequestParam("image") MultipartFile image) throws IOException {
-        String id = photoService.addPhoto(image.getOriginalFilename(),image);
+        String id = photoService.addPhoto(image.getOriginalFilename(),image); //image name, image object
         return  id;
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Resource> downloadPhoto(@PathVariable String id) {
-//        Photo photo = photoService.getPhoto(id);
-//        Resource resource
-//                = new ByteArrayResource(photo.getPhoto().getData());
-//
-//        return  ResponseEntity.ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + photo.getTitle() + "\"")
-//                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-//                .body(resource);
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Resource> downloadPhoto(@PathVariable String id) {
+        Photo photo = photoService.getPhoto(id);
+        Resource resource = new ByteArrayResource(photo.getPhoto().getData());
+
+        return  ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + photo.getTitle() + "\"")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
+    }
 }
