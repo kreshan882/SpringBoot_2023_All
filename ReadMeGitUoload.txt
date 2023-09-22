@@ -11,6 +11,7 @@ git init
 	git add S3_SpringLearn_JWT/
 	git add S4_SpringLearn_JPA/
 	git add S5_SpringLearn_MongoDb/
+	git add S6_SpringLearn_CloudeDeploy/
 	
 git commit -m "commit 1"AS
 git branch -M main
