@@ -1,0 +1,12 @@
+version: '3'
+services:
+  user:
+    container_name: cloude_testk
+    build: 
+      context: .
+      args:
+        JDK_VERSION: 17
+      dockerfile: Dockerfile
+    image: kreshan88/cloude_testk:2.2.2
+    ports:
+      - 8081:8081
