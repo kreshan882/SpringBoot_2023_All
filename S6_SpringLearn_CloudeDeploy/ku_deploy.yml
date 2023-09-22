@@ -1,0 +1,21 @@
+apiVersion: apps/v1 #api version in kurbernet
+kind: Deployment    # deploymnet / service / replica (what kind of component)
+metadata:             # abour the paticular component (metadata | spec-about the component spec | status- deside behavior )
+  name: cloudetestk-deployku
+  labels:
+    app: myappku
+spec:             
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myappku
+  template:
+    metadata:
+      labels:
+        app: myappku
+    spec:
+      containers:
+      - name: myappku-pod
+        image: kreshan88/cloude_testk:2.2.2
+        ports:
+        - containerPort: 8081

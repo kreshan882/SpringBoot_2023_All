@@ -1,0 +1,283 @@
+DCB ---> 
+
+B) https://www.youtube.com/watch?v=VAmntTPebKE&t=2205s  --> deploy mc to kurbanet cluster  (1h)
+
+
+C) https://www.youtube.com/watch?v=lXqqhyCPWC0&t=31s --> full tutorial (3 hour) 
+
+A) https://www.youtube.com/watch?v=x6jje4w3ZEs&list=PLhfxuQVMs-nyQIX8597QLKKhmpDvNX7tu (15 videos for kurbanet)
+
+##################################################################################################################################
+
+A) 15 videos for kurbanet
+https://www.youtube.com/watch?v=x6jje4w3ZEs&list=PLhfxuQVMs-nyQIX8597QLKKhmpDvNX7tu (15 videos for kurbanet)
+
+
+	1) INSTALL CHOCOLATTET ( MINIKUBE + KUBECTL ) 
+			1.A) Kubernetes cluster in prod   ---> multi master Nodes+ multi worker node
+			1.B) Kubernetes cluster in local  ---> Using MiniKube Single node Cluster
+			
+			1.1) MiniKube 	--> Single node cluster in local env
+			1.2) Kubectl  	--> comment line interface (to connect Kubernete with API)	
+			1.3) Chocolatey -->  software install--> ( https://chocolatey.org/install )
+					
+					1.3.1) INSTALL CHOCOLATEY
+						Power Shell+ run As admin-> SCRIPT_FOR_INSTALL [copy from above) ---> installes suess 
+						SCRIPT_FOR_INSTALL : >> Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+				   							 >> choco  ---> Chocolatey v2.2.2
+	
+					
+					1.3.2) INSTALL KUBECTL
+							>> choco install kubernetes-cli
+						
+					3) INSTALL MINIKUBE
+							>>choco install minikube
+			
+			1.4) MINKUBE can RUN in 2 DRIVER [Power Shell+ run As admin  + Start Docker Desktop]
+					1.4.1) Hiper-V ---> run in virtual env Driver (Windown feature on and off)
+							>>minikube start --driver=hiperv
+							
+					1.4.2) Docker ---> run in docker Driver
+							1.4.2.1) minikube start --driver=docker
+										OR 
+							1.4.2.1)minikube start
+							
+							1.4.2.2) minikube status  	---> running
+							
+							1.4.2.3) minikube dashboard 
+										http://127.0.0.1:54062/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/workloads?namespace=default
+							
+							1.4.2.4) minikube stop    ---> stop minikube
+							
+							1.4.2.5) minikube delete  ---> delete cluster
+
+							
+						
+			1.5) KUBECTL Comments 
+					1.5.1) kubectl get pods   ---> running app(pods) in minikube  
+								No resources found in default namespace.
+							
+					1.5.2) kubectl get node
+
+
+
+#------------------------------------------------------------------------------------------------------
+2) Docker VS Kubernetes VS Docker Swarm -Comparison [5 min]
+		
+		
+		2.1) DOCKER --> CI-CD pipeline for auto build|deployment  1.00
+				   how to Package your application
+				   configure , build, distribute container
+				   No web UI
+				   
+		2.2) KUBERNETES --> after deployment, maintaining & scalling container
+					   How to scale and Monitor container, in entier cluster
+					   this system manage cluster of containers
+					   Have dashboard
+					   orchestra  containers
+					   KUBECTL CLI tool
+					   
+					
+		2.3) DOCKER SWARM --> its a tool to cluster & orchestra containers [same like KUBERNETES] 3.00
+						Compair with KUBERNETES
+							installation easy
+							Light wight , loe lerning curve
+							Manuwal Scaling only (dont have auto scaling)
+							dont have monitoring tool (to monitor container)
+							support auto load balance , but kn only manuwal load balance
+							DOCKER CLI tool						
+#------------------------------------------------------------------------------------------------------
+
+3) GOOGLE KEBERNETTES ENGINE (GKE) Cluster-All Create in GUI [7 min]   ---> not clear, coudent create ???????????????????????????????????????????????????
+		1) Google Cloude  [Google Cloud Platform --> Cloud Console ]
+				https://console.cloud.google.com/welcome?project=hazel-flag-395813
+				
+		2) Select(myFirstProject] 
+				2.1) Kubernetes-> Clusters
+					1) cluser details (name: my-first-cluster)
+					2) Nodes :3 | enable auto scaling| E2 micro(1Cpu|1GB memory) | Disk 32GB| OS: ContainerOptimize OS|  ---> conform
+					
+					3) cluster details now can see(Detail| Stroage|Nodes)
+					
+				2.2) Computer Engine -> VM cluster
+						3 vm instance created (can see hear)
+						
+				2.3) kubernetes-> Clusters ->my-first-cluster 
+						connect with GKE cluster ---> connect button (get comment to connect)
+						Run in cloude shell in web 
+						G-Cloude Install in local computer -> run it from there
+						
+				2.4) RUN comments in GKE console, after connect
+						kubectl get node
+						kubectl get pods
+						
+				2.5) delete project 
+						kubernetes-> Clusters ->my-first-cluster(select)==>[Delete]
+-----------------------------------------------------------------------------------------						
+
+4) Kubernetes Architecture explanation
+			1) HW -> OS ->Apps1,2,3, 4,5    -----> epic
+			   HW -> OS -> Hyperviser-> VM1 +VM2 -> OS1+OS2 ->Apps1,2,3 + Apps4,5   -> Hitachi(dev+qa+uat)
+			
+			2) Containers (Simuler to VM1)
+			   HW -> OS -> Container Runtime-> CON1 +CON2 ->Apps1,2,3 + Apps4,5   -> GKE
+			
+			3) KUBERNETES ACTIVITY
+				3.1) CONTAINER ORCHESTRAtion TOOL, developed by Google
+				3.2) Highrt avaliablity ---> container restart
+				     Higher Scalabality ---> can add duplicate container
+			
+			4) KUBERNETES Modules
+					4.1) Master Node (alys one-1)
+								4.1.1) API server (connect with Kurbernet control pannel)
+											UI  (GKE web midel)
+											API (JSON or YML files)
+											CLI 
+											
+								4.1.2) Controlor Manager 
+										Node Controlor		  - check node up/down 
+										Replication Controlor - ninum number of replation check
+										Endpoint Controlor    - how to connect service /Port
+										Tokon Controlor       - create new Api tocken
+										
+								4.1.3) Schadulor
+										Manage worker Node Pods (to deploy application)
+										
+								4.1.4) ETCD clustor 
+										Backup detail for entire coluster/masternode (production define 2 Master Node)
+								
+								4.1.5) SERVICE (Static IP/DNS) 
+										Maintain PODS/application dynamis IP (handel dynamic ip , when new pod recreate based on (scalable/ avaliablity) )
+								
+								
+						
+					4.2) worker Node 3 ---> deployde application need to run hear
+								1 workor Node-> Pod 1,2,3(App 1,2,3) (Switch|web|db)------> dynamic ip created for each app/pods
+								
+					
+				
+
+5) Kubernetes Components [9 min]
+
+			5.1) Components Archicture			
+					** workor Node-> Pod 1,2(App 1,2) (iAdmin|db)	, SERVICE is handel dynamic ip
+						WORKER_NODE1
+							POD1: iAdmin App  (access outside the node, User)
+							POD2: DB serve    (access inside the node, Admin App only access DB)
+					
+					
+					5.1.1) SERVICE Component ---> 
+								Internal_SERVISE: DB dynamis IP Handel inside NODE
+								External_SERVISE: APP dynamis IP HANDEL with USER 
+												
+					5.1.2) ING (ingress componend)  
+								handel External_SERVISE dynamic IP, with DNS.
+					
+					5.1.3) CONFIG MAP Components  
+								Internal_SERVISE dynamic ip handel
+							
+					5.1.4) SEQURITE component 
+								store app usernam | paswword |schema name
+								
+					5.1.5) VOL-UEM component
+								when new DB pod created ,we need old data [backup component]
+								LOCAL_VOLUM:  memory backup in side kn cluster
+								REOTE_VOLUM:  memory backup out side kn cluster/ any backup service provider
+					
+					5.1.6) DEPLOYMENT Component   
+							HIGH_AVALIABLITY:  replication of WORKER node , (to manage pod recreate time)
+											   replaction DB is not good
+							
+					5.1.7) STATE_FUL_SET component 
+								Manage persistance DB high avaliablity
+								Recomended : Create DB outside Kubernetes cluster.(outher wise DB data can be duplicate)
+								
+								
+6) KUBECTL COMMANDS (minikube-Kubernetes) [15 min]
+			6.1) KUBECTL COMMANDS in local [Admin +Power shell]
+						minikube start   (default driver is docker)
+						kubectl get pod     -------> no resource
+						kubectl get deployment	-------> no resource
+						kubectl get service   ----> have kn default ip service only 
+					
+			6.2) DEPLOYMENT/UNdeploymnet (ngin-x server image from Docker HUB)  [deployment + replica + pod created]		
+						kubectl create deployment nginx-serverk --image=nginx
+						kubectl get deployment
+						kubectl get replicaset
+						kubectl get pod
+						kubectl describe deployment nginx-serverk
+						kubectl describe pod     
+						
+						kubectl delete deployment nginx-serverk  -----> delete
+						
+			6.3) EDIT Deployment(YML) /check detail log & bash			
+						6.3.1) kubectl edit deployment nginx-serverk   
+									YML file open to modifi
+									change in file ===> replicas: 2
+								
+						6.3.2) kubectl get pods     ---> now can see 2 pods
+						
+						6.3.3) kubectl logs nginx-serverk-c8b8fb77b-7whhd 
+
+						6.3.4) kubectl exec -it nginx-serverk-c8b8fb77b-7whhd -- bin/bash
+									#ls   
+									#exit
+				
+		
+			6.5) DOWNLOAD MY CUSTOME IMAGE(user-servicek.jar) from DOCKER HUB and run in minikube , using YML file [Min 11.00]
+						
+						6.5.1) download from DOCKER HUB
+								kubectl get deployment
+									cd D:\1_JAVA_SPRINGBOOT_K_CLOUDE\KURBERNETS\
+									kubectl apply -f .\deploy.yml    ----> upload the container to minikube local ,from Docker HUB
+								kubectl get deployment
+						
+						6.5.2) Check details
+								kubectl get replicaset
+								kubectl get pod
+								kubectl exec -it myapp-deployku-6ccd574c68-d7gcp -- bin/bash
+									#ls  ---> user-servicek.jar avaliable
+									#exit
+								kubectl logs myapp-deployku-6ccd574c68-d7gcp   (podname)  --------------> app log will be loaded 
+						
+						6.2.3) delete deploymnet
+								kubectl delete -f .\deploy.yml
+									OR
+								kubectl delete deployment myapp-deployku
+				
+				
+7) RUN THE APP LOCALY ( with deployment/service YAML )  [12 min]
+				kubectl get deployment ---> delete all deployment
+				kubectl get service    ---> default kurbernet service ClusterIP avaliable  
+				
+				--------cd D:\1_JAVA_SPRINGBOOT_K\KubernetsUploadTst2\
+				cd D:\1_JAVA_SPRINGBOOT_K_CLOUDE\KURBERNETS\
+				kubectl apply -f .\deployku.yml   ---> success
+				kubectl apply -f .\serviceku.yml  ---> success
+				
+				kubectl get services
+				kubectl describe service myapp-serviceku  ---> end point runiing port | outside expose port
+				kubectl get pods -o wide 				  ---> full pod details
+				kubectl get deployment myapp-deployku -o yaml ---> full yml file
+				
+	#############################################problam ########################################################################################
+				kubectl get services
+				minikube service myapp-serviceku -------> started http://localhost:1235 /http://127.0.0.1:57848/ (2nd box loaded) fail???????????????????????????
+					Pw: password (set docker password)
+					issue ---> fixed/success ===>  http://127.0.0.1:63133/home
+
+------------------------------------------------------------------------------------------------------------>>> need to check 7th
+
+
+===> MINIKUBE/DOCKER PASSWORD SET
+--------------------------------------------------------
+$ minikube ssh
+docker@minikube:~$ sudo su -
+root@minikube:~# passwd docker
+New password:    # <-- you can set any password
+Retype new password:
+passwd: password updated successfully
+root@minikube:~# logout
+docker@minikube:~$ logout
+--------------------------------------------------------
+
